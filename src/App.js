@@ -57,7 +57,8 @@ function App() {
         const sanitize2 = sanitize.replaceAll(stringRequest2, '')
         const sanitize3 = sanitize2.replaceAll(stringRequest3, '')
         const sanitize4 = sanitize3.replaceAll(stringRequest4, '')
-        return { Body: sanitize4, id:item.id, Email: item.Email, Date: item.Date, Subject: item.Subject, JobId: item.JobId}
+        const sanitize5 = sanitize4.replaceAll('>', '')
+        return { Body: sanitize5, id:item.id, Email: item.Email, Date: item.Date, Subject: item.Subject, JobId: item.JobId}
       })
       setFirebaseData(newArray)
       setLoaded(true)
@@ -120,7 +121,7 @@ function App() {
         <DoctorForm/>
       </Route>
       <Route path="/">
-        <div style={{display:"inline-flex"}}>
+        <div style={{display:"inline-flex", width:"100%"}}>
         <Home/>
         <DoctorForm/>
         </div>

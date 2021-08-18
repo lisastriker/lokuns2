@@ -40,3 +40,11 @@
 .MuiInputBase-input.Mui-disabled{
   color: rgba(0, 0, 0, 0.5);
 }
+
+.MuiAccordionSummary-root:visited{
+  background-color:grey;
+}
+
+.MuiAccordionSummary-root:hover{
+  background-color:#ebebeb;
+}
