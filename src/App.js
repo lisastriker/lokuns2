@@ -10,6 +10,7 @@ import { Pagination } from '@material-ui/lab'
 import AppBarComponent from './Appbar'
 import { Route, Switch, Redirect, Link, BrowserRouter as Router } from 'react-router-dom';
 import User from './User'
+import DoctorForm from './DoctorForm'
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 } else {
@@ -113,6 +114,9 @@ function App() {
       <Switch>
       <Route path="/user">
         <User />
+      </Route>
+      <Route path="/doctorform">
+        <DoctorForm/>
       </Route>
       <Route path="/">
         <Home/>

@@ -16,6 +16,7 @@ code {
 html {
   height:100%;
   background-color: grey;
+  min-width:500px
 }
 
 body {

@@ -20,7 +20,7 @@ function AppBarComponent(props) {
       <Link to="/"><img alt="homelogo" src={LokunsLogo}/></Link>
     </IconButton>
     <div style={{marginLeft:"auto"}}>
-      <Typography>{props.userProfile !== null ? props.userProfile.name : ''}</Typography>
+      <Typography style={{display:"inline-flex"}}>{props.userProfile !== null ? props.userProfile.name : ''}</Typography>
       <IconButton aria-label="show 4 new mails" color="inherit">
         <Badge badgeContent={4} color="secondary">
           <MailIcon />
