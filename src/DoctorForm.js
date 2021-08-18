@@ -46,6 +46,7 @@ const Input = styled(Input1)`
 `
 
 const MainContainer = styled.div`
+    margin-right: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,9 +55,8 @@ const MainContainer = styled.div`
 `
 const Container = styled.div`
   border-radius:10px;
-  height: 100%;
-  width: 100%;
-  background-color:white;
+  margin-top:20px;
+  background-color:#fafafa;
   display:flex;
   justify-content: center;
   align-items: center;
@@ -64,9 +64,9 @@ const Container = styled.div`
 `
 
 const FormGroupStyled = styled(FormGroup)`
-  padding: 50px;
+  padding: 20px;
   border: 2px solid black;
-  max-width:50%;
+  max-width:100%;
 `
 
 function DoctorForm() {

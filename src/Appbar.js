@@ -5,12 +5,12 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import LokunsLogo from './assets/lokunswhite.png'
+import LokunsLogo from './assets/lokunsorange.png'
 import { Link } from 'react-router-dom'
 import User from './User'
 function AppBarComponent(props) {
   return (
-  <AppBar position="static" style={{"min-width":"400px", backgroundColor:"#1b203c"}}>
+  <AppBar position="static" style={{"min-width":"400px", backgroundColor:"#FF9F1C"}}>
   <Toolbar>
     <IconButton
       edge="start"
@@ -24,11 +24,6 @@ function AppBarComponent(props) {
       <IconButton aria-label="show 4 new mails" color="inherit">
         <Badge badgeContent={4} color="secondary">
           <MailIcon />
-        </Badge>
-      </IconButton>
-      <IconButton aria-label="show 17 new notifications" color="inherit">
-        <Badge badgeContent={17} color="secondary">
-          <NotificationsIcon />
         </Badge>
       </IconButton>
       <IconButton >
@@ -49,3 +44,9 @@ function AppBarComponent(props) {
 }
 
 export default AppBarComponent
+
+{/* <IconButton aria-label="show 17 new notifications" color="inherit">
+<Badge badgeContent={17} color="secondary">
+  <NotificationsIcon />
+</Badge>
+</IconButton> */}

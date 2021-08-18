@@ -80,7 +80,7 @@ function App() {
   /*.slice(indexOfFirstPost, indexOfLastPost)*/
   const listAccordian = slice.map(data => {
     return(        
-    <Accordion style={{backgroundColor:"#dedede"}} expanded={expandedPanel === data.id} onChange={handleAccordionChange(data.id)}>
+    <Accordion style={{backgroundColor:"#fafafa"}} expanded={expandedPanel === data.id} onChange={handleAccordionChange(data.id)}>
     <AccordionSummary expandIcon={<ExpandMore />}>
       <Typography style={{fontWeight:"bold"}}>
       Job ID:{data.JobId}
@@ -119,7 +119,10 @@ function App() {
         <DoctorForm/>
       </Route>
       <Route path="/">
+        <div style={{display:"inline-flex"}}>
         <Home/>
+        <DoctorForm/>
+        </div>
       </Route>
       </Switch>
     </div>
