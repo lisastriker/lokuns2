@@ -96,12 +96,12 @@ function signUp(email, password){
       email: email,
       password: password,
       medical:medical
-  }).then(() => {
+    }).then(() => {
       console.log("Document successfully written!");
-  })
-  .catch((error) => {
+    })
+    .catch((error) => {
       console.error("Error writing document: ", error);
-  });
+    });
     console.log(userCredential.user.uid)
     localStorage.setItem('user', JSON.stringify({name:name, email:email, password:password, medical:medical}))
     var user = userCredential.user;
@@ -111,9 +111,6 @@ function signUp(email, password){
   .catch((error) => {
     setErrorMessage(error.message)
     console.log(error.message)
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // ..
   });
   }
 

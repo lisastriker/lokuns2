@@ -27,7 +27,7 @@ function App() {
   const [page, setPage] = useState(1)
   const [timeStampData, setTimeStampData] = useState([""])
   const handleAccordionChange = (number) => (event, isExpanded) => {
-    console.log({ event, isExpanded });
+    // console.log({ event, isExpanded });
     setExpandedPanel(isExpanded ? number : false);
   };
   
