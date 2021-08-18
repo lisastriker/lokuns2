@@ -5,9 +5,11 @@ import firebase from '@firebase/app';
 import { useHistory } from 'react-router-dom';
 import React from 'react';
 import { EmailRounded } from '@material-ui/icons';
+
 require('firebase/auth');
 var firebaseui = require('firebaseui');
 require('firebase/auth')
+
 
 const Type = styled(Typography)`
   text-align:left;
@@ -25,6 +27,7 @@ const Button = styled(Button1)`
   }
 `
 const InputLabel = styled(InputLabel1)`
+  color:black;
   font-family: roboto;
   font-size: 1.5em;
   font-weight: 400;
@@ -85,10 +88,10 @@ function DoctorForm() {
 
     return <MainContainer ><Container><FormGroupStyled>
     <InputLabel htmlFor="my-input">Doctor User Profile</InputLabel>  
-    <Input required="true"  placeholder="Name" id="my-input" aria-describedby="my-helper-text" value={userProfile ? userProfile.name: ""}/>
-    <Input required="true"  placeholder="Address" id="my-input" aria-describedby="my-helper-text" value={userProfile ? userProfile.address: ""}/>
-    <Input required="true"  placeholder="Email" id="my-input" aria-describedby="my-helper-text" value={userProfile ? userProfile.email: ""}></Input>  
-    <Input required="true"  placeholder="Medical License Number" id="my-input" aria-describedby="my-helper-text" value={userProfile ? userProfile.medical: ""}/>
+    <Input required="true" disabled="true"  placeholder="Name" id="my-input" aria-describedby="my-helper-text" value={userProfile ? userProfile.name: ""}/>
+    <Input required="true" disabled="true" placeholder="Address" id="my-input" aria-describedby="my-helper-text" value={userProfile ? userProfile.address: ""}/>
+    <Input required="true" disabled="true" placeholder="Email" id="my-input" aria-describedby="my-helper-text" value={userProfile ? userProfile.email: ""}></Input>  
+    <Input required="true" disabled="true" placeholder="Medical License Number" id="my-input" aria-describedby="my-helper-text" value={userProfile ? userProfile.medical: ""}/>
     <Button type="submit" label="submit" onClick={() => checkUser()}>Submit</Button>
     </FormGroupStyled>
     </Container>

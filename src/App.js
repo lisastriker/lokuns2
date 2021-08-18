@@ -11,6 +11,7 @@ import AppBarComponent from './Appbar'
 import { Route, Switch, Redirect, Link, BrowserRouter as Router } from 'react-router-dom';
 import User from './User'
 import DoctorForm from './DoctorForm'
+
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 } else {

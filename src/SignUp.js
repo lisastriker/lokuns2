@@ -3,11 +3,18 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import firebase from '@firebase/app';
 import { useHistory } from 'react-router-dom';
-
+import { firebaseConfig } from "./firebaseConfig"
+import "firebase/firestore";
 require('firebase/auth');
 var firebaseui = require('firebaseui');
 require('firebase/auth')
 
+if(!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app()
+}
+var db = firebase.firestore()
 const Type = styled(Typography)`
   text-align:left;
   word-wrap: break-word;
@@ -82,9 +89,21 @@ function signUp(email, password){
   firebase.auth().createUserWithEmailAndPassword(email, password)
   .then((userCredential) => {
     // Signed in 
-    console.log(userCredential.user)
+    db.collection("users").doc(userCredential.user.uid).set({
+      uid:userCredential.user.uid,
+      name: name,
+      address:address,
+      email: email,
+      password: password,
+      medical:medical
+  }).then(() => {
+      console.log("Document successfully written!");
+  })
+  .catch((error) => {
+      console.error("Error writing document: ", error);
+  });
+    console.log(userCredential.user.uid)
     localStorage.setItem('user', JSON.stringify({name:name, email:email, password:password, medical:medical}))
-    history.push("/");
     var user = userCredential.user;
     history.push("/");
     // ...
