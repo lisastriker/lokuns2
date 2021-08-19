@@ -60,7 +60,6 @@ const MainContainer = styled.div`
 `
 const Container = styled.div`
   border-radius:10px;
-  margin-top:20px;
   background-color:#fafafa;
   display:flex;
   justify-content: center;

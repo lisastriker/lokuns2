@@ -21,13 +21,11 @@ if(!firebase.apps.length) {
 var db = firebase.firestore()
 
 function App() {
-  const accordionScroll = useRef(null)
   const [loaded, setLoaded] = useState(false)
   const [firebaseData, setFirebaseData] = useState([""])
   const [expandedPanel, setExpandedPanel] = useState(false);
   const [postsPerPage] = useState(10);
   const [page, setPage] = useState(1)
-  const [timeStampData, setTimeStampData] = useState([""])
   const handleAccordionChange = (number) => (event, isExpanded) => {
     // console.log({ event, isExpanded });
     setExpandedPanel(isExpanded ? number : false);
@@ -35,13 +33,11 @@ function App() {
 
   const parseData = (db) => {
    const dataArray = [];
-   const arrayTime = [];
     const snapshot = db.collection('emails').orderBy('Timestamp', 'desc').get();
       db.collection('...').get().then(snap => {
       });
        snapshot.then(
         (querySnapshot) => {
-          var jobId = 0
             querySnapshot.forEach((doc) => {
                 const document = { ...doc.data(), id: doc.id , TimeStamp: doc.TimeStamp};
                 console.log(doc.id)
@@ -88,6 +84,9 @@ function App() {
       console.log(dataBefore)
       const number = dataBefore.match(/\d{8}/g)
       console.log(number)
+      // if(number.toString().substring(0,1) === '8' || number.toString().substring(0,1) === '9'){
+      //   console.log(number)
+      // }
     }
     // const replaceSpace = dataBefore.replace(/ /g, '')
     // console.log(replaceSpace)
@@ -104,7 +103,12 @@ function App() {
     </AccordionSummary>
 
     <AccordionDetails style={{display:"flex", "wordBreak":"break-word", "flexDirection":"column"}}>
-      <Typography style={{whiteSpace: 'pre-line'}}>{data.Body}</Typography>
+      <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+      <Typography style={{whiteSpace: 'pre-line', textAlign:"left", padding:"0 5px 0 40px", width:"60%"}}>{data.Body}</Typography>
+      <div style={{display:"flex", alignItems:"start", paddingRight:"20px"}}> 
+      <DoctorForm/>
+      </div>
+      </div>
       <br/>
       <Typography>Email sent on : {data.Date}</Typography>
     </AccordionDetails>
@@ -113,7 +117,7 @@ function App() {
 
   function Home() {
     return (
-      <div style={{width:"80%", margin:"20px", flexDirection:"column", display:"flex"}}>
+      <div style={{width:"100%", margin:"20px", flexDirection:"column", display:"flex"}}>
       <div style={{alignItems:"center"}}>
       {loaded ? listAccordian : null} 
       <Pagination style={{backgroundColor:"white", marginTop:"10px"}} shape="rounded" color="secondary" variant="outline" page={page} count={Math.ceil(firebaseData.length / postsPerPage)} onChange={handleChange}/>
@@ -129,16 +133,12 @@ function App() {
       <Route path="/user">
         <User />
       </Route>
-      <Route path="/doctorform">
-        <DoctorForm/>
-      </Route>
       <Route path="/signin">
         <SignInForm/>
       </Route>
       <Route path="/">
         <div style={{display:"inline-flex", width:"100%"}}>
         <Home/>
-        <DoctorForm/>
         </div>
       </Route>
       </Switch>
