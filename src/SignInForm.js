@@ -54,39 +54,44 @@ const Container = styled.div`
 `
 
 const FormGroupStyled = styled(FormGroup)`
+  width:30%;
   padding: 50px;
   border: 2px solid black;
-  max-width:50%;
+  max-width:30%;
+`
+const Type = styled(Typography)`
+  margin: 5px 0px 5px 0px;
+  text-align:left;
+  word-wrap: break-word;
+  font-size:0.8em;
 `
 
 function SignInForm(){
 let history = useHistory();
 const [email, setEmail] = useState("")
 const [password, setPassword] = useState("")
+const [errorMessage, setErrorMessage] = useState("")
 function signIn(email, password){
   console.log("I'm here")
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then((userCredential) => {
     console.log("Signed in")
     localStorage.setItem('useruid', userCredential.user.uid)
-    localStorage.setItem('name', userCredential.user.name) //Store userUid in localStorage
-    console.log(userCredential.user.uid)
+    console.log(userCredential.user)
     history.push("/");
   })
   .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
+    setErrorMessage(error.message);
   });
 }
   return <MainContainer ><Container><FormGroupStyled>
-  <InputLabel htmlFor="my-input">Email address</InputLabel>
-  <InputLabel htmlFor="my-input">Sign Up</InputLabel>  
+  <InputLabel htmlFor="my-input">Sign In</InputLabel>  
   <Input required="true" placeholder="Email Address" id="my-input" aria-describedby="my-helper-text" value={email} onChange={(event) => setEmail(event.target.value)}/>
-  <InputLabel htmlFor="my-input">Password</InputLabel>  
-  <Input id="my-input" aria-describedby="my-helper-text" value={password} onChange={(event) => setPassword(event.target.value)}/>
+  <Input type="password" id="my-input" aria-describedby="my-helper-text" value={password} onChange={(event) => setPassword(event.target.value)}/>
   <Button type="submit" label="submit" onClick={() => signIn(email, password)}>Submit</Button>
-  <InputLabel htmlFor="my-input">If you don't have an account sign up.</InputLabel>  
-  <Button type="submit" label="Sign Up" href="/user">Sign Up</Button>
+  <Type>{errorMessage}</Type>
+  <Type htmlFor="my-input">If you don't have an account sign up.</Type>  
+  <Button type="submit" style={{ backgroundColor:"#FF9F1C"}}label="Sign Up" href="/user">Sign Up</Button>
   </FormGroupStyled>
   </Container>
   </MainContainer>

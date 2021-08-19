@@ -73,7 +73,7 @@ const Container = styled.div`
 const FormGroupStyled = styled(FormGroup)`
   padding: 50px;
   border: 2px solid black;
-  max-width:50%;
+  max-width:30%;
 `
 
 function SignUp(){
@@ -104,8 +104,6 @@ function signUp(email, password){
       console.error("Error writing document: ", error);
     });
     console.log(userCredential.user.uid)
-    // localStorage.setItem('user', JSON.stringify({name:name, email:email, password:password, medical:medical}))
-    var user = userCredential.user;
     history.push("/signin");
     // ...
   })

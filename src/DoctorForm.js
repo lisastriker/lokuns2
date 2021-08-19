@@ -87,10 +87,10 @@ function DoctorForm() {
   if(userUID){
     db.collection("users").doc(userUID).get().then((doc)=>{
       if (doc.exists) {
-        setName(doc.data.name)
-        setAddress(doc.data.address)
-        setEmail(doc.data.email)
-        setMedical(doc.data.medical)
+        setName(doc.data().name)
+        setAddress(doc.data().address)
+        setEmail(doc.data().email)
+        setMedical(doc.data().medical)
         // console.log("Document data:", doc.data());
     } else {
         // doc.data() will be undefined in this case

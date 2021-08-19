@@ -8,7 +8,19 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import LokunsLogo from './assets/lokunsorange.png'
 import { Link } from 'react-router-dom'
 import User from './User'
+import firebase from '@firebase/app';
+import { useState } from 'react';
 function AppBarComponent(props) {
+  const [name, setName] = useState("")
+  var db = firebase.firestore()
+  var userUID = localStorage.getItem('useruid') ? localStorage.getItem('useruid') : ""  
+  if(userUID){
+    db.collection("users").doc(userUID).get().then((doc)=>{
+      if (doc.exists) {
+        setName(doc.data().name)
+      } console.log("No such document") 
+    })
+    }
   return (
   <AppBar position="static" style={{"min-width":"400px", backgroundColor:"#FF9F1C"}}>
   <Toolbar>
@@ -20,7 +32,7 @@ function AppBarComponent(props) {
       <Link to="/"><img alt="homelogo" src={LokunsLogo}/></Link>
     </IconButton>
     <div style={{marginLeft:"auto"}}>
-      <Typography style={{display:"inline-flex"}}></Typography>
+      <Typography style={{display:"inline-flex"}}>{name}</Typography>
       <IconButton aria-label="show 4 new mails" color="inherit">
         <Badge badgeContent={4} color="secondary">
           <MailIcon />
@@ -44,10 +56,3 @@ function AppBarComponent(props) {
 }
 
 export default AppBarComponent
-
-{/* <IconButton aria-label="show 17 new notifications" color="inherit">
-<Badge badgeContent={17} color="secondary">
-  <NotificationsIcon />
-  {props.userProfile !== null ? props.userProfile.name : ''}
-</Badge>
-</IconButton> */}
