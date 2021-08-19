@@ -1,7 +1,6 @@
-import { Typography, FormGroup, InputLabel as InputLabel1, Input as Input1, FormHelperText, Button as Button1 } from '@material-ui/core';
+import { Typography, FormGroup, InputLabel as InputLabel1, Input as Input1, Button as Button1 } from '@material-ui/core';
 import { useState } from 'react';
 import firebase from 'firebase/app';
-import * as firebaseui from 'firebaseui'
 import "firebase/firestore";
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
@@ -54,10 +53,10 @@ const Container = styled.div`
 `
 
 const FormGroupStyled = styled(FormGroup)`
-  width:30%;
   padding: 50px;
   border: 2px solid black;
   max-width:30%;
+  width:30%;
 `
 const Type = styled(Typography)`
   margin: 5px 0px 5px 0px;

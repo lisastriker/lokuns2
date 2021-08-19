@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { ExpandMore } from '@material-ui/icons';
 import { Accordion, AccordionSummary, AccordionDetails, AppBar, IconButton, Button, Toolbar, Typography } from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { firebaseConfig } from "./firebaseConfig"
 import firebase from 'firebase/app';
 import "firebase/firestore";
@@ -21,6 +21,7 @@ if(!firebase.apps.length) {
 var db = firebase.firestore()
 
 function App() {
+  const accordionScroll = useRef(null)
   const [loaded, setLoaded] = useState(false)
   const [firebaseData, setFirebaseData] = useState([""])
   const [expandedPanel, setExpandedPanel] = useState(false);
@@ -31,7 +32,7 @@ function App() {
     // console.log({ event, isExpanded });
     setExpandedPanel(isExpanded ? number : false);
   };
-  
+
   const parseData = (db) => {
    const dataArray = [];
    const arrayTime = [];
@@ -82,6 +83,16 @@ function App() {
   const slice = accordionObject.slice(indexOfFirstPost, indexOfLastPost)
   /*.slice(indexOfFirstPost, indexOfLastPost)*/
   const listAccordian = slice.map(data => {
+    if(data.Body !== undefined){
+      const dataBefore = data.Body.replaceAll(/ /g, '')
+      console.log(dataBefore)
+      const number = dataBefore.match(/\d{8}/g)
+      console.log(number)
+    }
+    // const replaceSpace = dataBefore.replace(/ /g, '')
+    // console.log(replaceSpace)
+    // .replace(/ /g, '')
+    // console.log(`I am${replaced}`)s
     return(        
     <Accordion style={{backgroundColor:"#fafafa"}} expanded={expandedPanel === data.id} onChange={handleAccordionChange(data.id)}>
     <AccordionSummary expandIcon={<ExpandMore />}>

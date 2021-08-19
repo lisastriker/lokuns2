@@ -1,13 +1,10 @@
 import { AppBar, IconButton, InputBase, Toolbar, Typography, Badge } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
 import MenuIcon from '@material-ui/icons/Menu';
 import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import LokunsLogo from './assets/lokunsorange.png'
 import { Link } from 'react-router-dom'
-import User from './User'
 import firebase from '@firebase/app';
 import { useState } from 'react';
 function AppBarComponent(props) {
@@ -32,14 +29,14 @@ function AppBarComponent(props) {
       <Link to="/"><img alt="homelogo" src={LokunsLogo}/></Link>
     </IconButton>
     <div style={{marginLeft:"auto"}}>
-      <Typography style={{display:"inline-flex"}}>{name}</Typography>
+      <Typography style={{display:"inline-flex", padding:"10px"}}>{name}</Typography>
       <IconButton aria-label="show 4 new mails" color="inherit">
         <Badge badgeContent={4} color="secondary">
           <MailIcon />
         </Badge>
       </IconButton>
       <IconButton >
-      <Link to="/signin"><AccountCircleIcon/></Link>
+      <Link class="ProfileIcon" to="/signin"><AccountCircleIcon/></Link>
       </IconButton>
       <IconButton
         aria-label="show more"
