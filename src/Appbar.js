@@ -20,14 +20,14 @@ function AppBarComponent(props) {
       <Link to="/"><img alt="homelogo" src={LokunsLogo}/></Link>
     </IconButton>
     <div style={{marginLeft:"auto"}}>
-      <Typography style={{display:"inline-flex"}}>{props.userProfile !== null ? props.userProfile.name : ''}</Typography>
+      <Typography style={{display:"inline-flex"}}></Typography>
       <IconButton aria-label="show 4 new mails" color="inherit">
         <Badge badgeContent={4} color="secondary">
           <MailIcon />
         </Badge>
       </IconButton>
       <IconButton >
-      <Link to="/user"><AccountCircleIcon/></Link>
+      <Link to="/signin"><AccountCircleIcon/></Link>
       </IconButton>
       <IconButton
         aria-label="show more"
@@ -48,5 +48,6 @@ export default AppBarComponent
 {/* <IconButton aria-label="show 17 new notifications" color="inherit">
 <Badge badgeContent={17} color="secondary">
   <NotificationsIcon />
+  {props.userProfile !== null ? props.userProfile.name : ''}
 </Badge>
 </IconButton> */}

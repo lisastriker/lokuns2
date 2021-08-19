@@ -5,12 +5,14 @@ import firebase from '@firebase/app';
 import { useHistory } from 'react-router-dom';
 import React from 'react';
 import { EmailRounded } from '@material-ui/icons';
+import "firebase/firestore";
+import { firebaseConfig } from "./firebaseConfig"
 
-require('firebase/auth');
-var firebaseui = require('firebaseui');
-require('firebase/auth')
-
-
+if(!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app()
+}
 const Type = styled(Typography)`
   text-align:left;
   word-wrap: break-word;
@@ -77,21 +79,38 @@ function DoctorForm() {
   const [name, setName] = useState("")
   const [address, setAddress] = useState("")
   const [medical, setMedical] = useState("")
-  var userProfile = JSON.parse(localStorage.getItem('user'))   
+  //Get userUID
+  
+  var userUID = localStorage.getItem('useruid') ? localStorage.getItem('useruid') : ""  
+  // console.log(userUID)
+  var db = firebase.firestore()
+  if(userUID){
+    db.collection("users").doc(userUID).get().then((doc)=>{
+      if (doc.exists) {
+        setName(doc.data.name)
+        setAddress(doc.data.address)
+        setEmail(doc.data.email)
+        setMedical(doc.data.medical)
+        // console.log("Document data:", doc.data());
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
+  }
   function checkUser(){
-    setName(userProfile.name)
-    setAddress(userProfile.address)
-    setEmail(userProfile.email)
-    setMedical(userProfile.medial)
+
     console.log(name)
   }
 
     return <MainContainer ><Container><FormGroupStyled>
     <InputLabel htmlFor="my-input">Doctor User Profile</InputLabel>  
-    <Input required="true" disabled="true"  placeholder="Name" id="my-input" aria-describedby="my-helper-text" value={userProfile ? userProfile.name: ""}/>
-    <Input required="true" disabled="true" placeholder="Address" id="my-input" aria-describedby="my-helper-text" value={userProfile ? userProfile.address: ""}/>
-    <Input required="true" disabled="true" placeholder="Email" id="my-input" aria-describedby="my-helper-text" value={userProfile ? userProfile.email: ""}></Input>  
-    <Input required="true" disabled="true" placeholder="Medical License Number" id="my-input" aria-describedby="my-helper-text" value={userProfile ? userProfile.medical: ""}/>
+    <Input required={true} disabled={true}  placeholder="Name" id="my-input" aria-describedby="my-helper-text"  value={name}/>
+    <Input required={true} disabled={true} placeholder="Address" id="my-input" aria-describedby="my-helper-text"  value={address}/>
+    <Input required={true} disabled={true} placeholder="Email" id="my-input" aria-describedby="my-helper-text"  value={email}></Input>  
+    <Input required={true} disabled={true} placeholder="Medical License Number" id="my-input" aria-describedby="my-helper-text" value={medical}/>
     <Button type="submit" label="submit" onClick={() => checkUser()}>Submit</Button>
     </FormGroupStyled>
     </Container>

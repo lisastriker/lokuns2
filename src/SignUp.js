@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import firebase from '@firebase/app';
 import { useHistory } from 'react-router-dom';
 import { firebaseConfig } from "./firebaseConfig"
+import SignInForm from './SignInForm'
 import "firebase/firestore";
 require('firebase/auth');
 var firebaseui = require('firebaseui');
@@ -103,9 +104,9 @@ function signUp(email, password){
       console.error("Error writing document: ", error);
     });
     console.log(userCredential.user.uid)
-    localStorage.setItem('user', JSON.stringify({name:name, email:email, password:password, medical:medical}))
+    // localStorage.setItem('user', JSON.stringify({name:name, email:email, password:password, medical:medical}))
     var user = userCredential.user;
-    history.push("/");
+    history.push("/signin");
     // ...
   })
   .catch((error) => {

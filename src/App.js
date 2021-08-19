@@ -11,6 +11,7 @@ import AppBarComponent from './Appbar'
 import { Route, Switch, Redirect, Link, BrowserRouter as Router } from 'react-router-dom';
 import User from './User'
 import DoctorForm from './DoctorForm'
+import SignInForm from './SignInForm'
 
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -72,7 +73,7 @@ function App() {
   const handleChange = (event, value) => {
     setPage(value);
   };
-  var userProfile = JSON.parse(localStorage.getItem('user'))
+  var userProfile = localStorage.getItem('name')
   console.log(userProfile)
   const indexOfLastPost = page * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -119,6 +120,9 @@ function App() {
       </Route>
       <Route path="/doctorform">
         <DoctorForm/>
+      </Route>
+      <Route path="/signin">
+        <SignInForm/>
       </Route>
       <Route path="/">
         <div style={{display:"inline-flex", width:"100%"}}>
