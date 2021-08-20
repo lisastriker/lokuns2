@@ -101,12 +101,20 @@ function DoctorForm(props) {
     });
   }
 
-  const openInNewTab = (url) => {
-    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+  const openInNewTab = (url, url2) => {
+    if(finalNumberValue.length !== 0 ){
+      const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
     if (newWindow) newWindow.opener = null
+    } else {
+      const newWindow = window.open(url2, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null
+    }
+    
     //Very interesting using setFInalNumberValue for the input field to be changed!
   }
   
+  const ref = React.createRef();
+  const encodedMessage = encodeURIComponent('You are texting me')
 
     return <MainContainer ><Container><FormGroupStyled>
     <InputLabel htmlFor="my-input">Doctor User Profile</InputLabel>  
@@ -114,8 +122,8 @@ function DoctorForm(props) {
     <Input required={true} disabled={true} placeholder="Address" id="my-input" aria-describedby="my-helper-text"  value={address}/>
     <Input required={true} disabled={true} placeholder="Email" id="my-input" aria-describedby="my-helper-text"  value={email}></Input>  
     <Input required={true} disabled={true} placeholder="Medical License Number" id="my-input" aria-describedby="my-helper-text" value={medical}/>
-    <Input defaultValue={props.finalNumber} onChange={event => setFinalNumberValue(event.target.value)} ></Input>
-    <Button type="submit" label="submit" onClick={() => openInNewTab(`http://wa.me/${finalNumberValue}`)}>Submit</Button>
+    <Input defaultValue={props.finalNumber} onChange={(e) => setFinalNumberValue(e.target.value)}></Input>
+    <Button type="submit" label="submit" onClick={() => openInNewTab(`http://wa.me/${finalNumberValue}`, `http://wa.me/${props.finalNumber}`)}>Submit</Button>
     </FormGroupStyled>
     </Container>
     </MainContainer>;
