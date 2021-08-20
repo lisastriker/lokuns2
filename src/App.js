@@ -12,7 +12,6 @@ import { Route, Switch, Redirect, Link, BrowserRouter as Router } from 'react-ro
 import User from './User'
 import DoctorForm from './DoctorForm'
 import SignInForm from './SignInForm'
-import { FormGroup, InputLabel as InputLabel1, Input as Input1, Button as Button1} from '@material-ui/core';
 import styled from 'styled-components';
 import Views from './Views'
 if(!firebase.apps.length) {
@@ -21,28 +20,6 @@ if(!firebase.apps.length) {
   firebase.app()
 }
 var db = firebase.firestore()
-const MainContainer = styled.div`
-    margin-right: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-
-`
-const Container = styled.div`
-  border-radius:10px;
-  background-color:#fafafa;
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  
-`
-
-const FormGroupStyled = styled(FormGroup)`
-  padding: 20px;
-  border: 2px solid black;
-  max-width:100%;
-`
 
 function App() {
   const [loaded, setLoaded] = useState(false)

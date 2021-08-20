@@ -91,6 +91,7 @@ function DoctorForm(props) {
   var db = firebase.firestore()
   if(userUID){
     db.collection("users").doc(userUID).get().then((doc)=>{
+      
       if (doc.exists) {
         setName(doc.data().name)
         setAddress(doc.data().address)
@@ -113,13 +114,19 @@ function DoctorForm(props) {
         
     submitsNumber.update({
       submits:firebase.firestore.FieldValue.increment(1)
-    }).then()
-  }
-  if(props.uid){
-    db.collection("submits").doc(props.uid).get().then((doc)=>{
-      setSubmitNumber(doc.data().submits)
+    }).then(()=>{
     })
   }
+
+
+  // useEffect(()=>{
+  //   if(userUID){
+  //     db.collection("submits").doc(props.uid).get().then((doc)=>{
+  //       setSubmitNumber(doc.data().submits)
+  //     })
+  //   }
+  // },[props.uid])
+    
   
   const openInNewTab = (url, url2) => {
     if(props.uid.length !== 0 ){
@@ -148,7 +155,7 @@ function DoctorForm(props) {
     return <MainContainer ><Container><FormGroupStyled>
     <div style={{display:"flex", flexDirection:"row", alignSelf:"flex-end"}}>
     <VisibilityIcon></VisibilityIcon>
-    <Typography style={{paddingLeft:"5px"}}>Applicants: {submitNumber}</Typography>
+    <Typography style={{paddingLeft:"5px"}}>Applicants: {props.uid}</Typography>
     </div>
     <InputLabel htmlFor="my-input">Booking Details</InputLabel> 
     <Input required={true} disabled={true}  placeholder="Name" id="my-input" aria-describedby="my-helper-text"  value={name}/>
