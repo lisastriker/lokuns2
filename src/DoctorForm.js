@@ -1,5 +1,5 @@
 import { Typography, FormGroup, InputLabel as InputLabel1, Input as Input1, Button as Button1} from '@material-ui/core';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import firebase from '@firebase/app';
 import { useHistory } from 'react-router-dom';
@@ -7,8 +7,8 @@ import React from 'react';
 import { EmailRounded } from '@material-ui/icons';
 import "firebase/firestore";
 import { firebaseConfig } from "./firebaseConfig"
+import DatePicker from 'react-date-picker';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 } else {
@@ -74,6 +74,7 @@ const FormGroupStyled = styled(FormGroup)`
   max-width:100%;
 `
 
+
 function DoctorForm(props) {
   const [email, setEmail] = useState("")
   const [name, setName] = useState("")
@@ -81,6 +82,8 @@ function DoctorForm(props) {
   const [medical, setMedical] = useState("")
   const [finalNumberValue, setFinalNumberValue] = useState("")
   const [submitNumber ,setSubmitNumber] = useState(0)
+  const [day, setDay] = useState("")
+  const [date, setDate] = useState("")
   //Get userUID
   
   //Get sign in USERUID
@@ -132,8 +135,15 @@ function DoctorForm(props) {
     
     //Very interesting using setFInalNumberValue for the input field to be changed!
   }
+  useEffect(()=>{
+    if(day){ 
+      const dateArray = day.toDateString().split(' ')
+      setDate(dateArray.join('-'))
+    }
+  }, [day])
+ 
 
-  const encodedMessage = encodeURIComponent(`Hi i'm ${name}, my medical license number is ${medical}, i would like to apply for the slot: `)
+  const encodedMessage = encodeURIComponent(`Hi i'm ${name}, my medical license number is ${medical}, i would like to apply for the slot on ${date} at `)
 
     return <MainContainer ><Container><FormGroupStyled>
     <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
@@ -145,8 +155,15 @@ function DoctorForm(props) {
     <Input required={true} disabled={true} placeholder="Address" id="my-input" aria-describedby="my-helper-text"  value={address}/>
     <Input required={true} disabled={true} placeholder="Email" id="my-input" aria-describedby="my-helper-text"  value={email}></Input>  
     <Input required={true} disabled={true} placeholder="Medical License Number" id="my-input" aria-describedby="my-helper-text" value={medical}/>
+    <div style={{display:"flex", flexDirection:"rows"}}>
+    <DatePicker
+        onChange={(event) => setDay(event)}
+        value={day}
+      />
+    </div>
+    <InputLabel1 style={{textAlign: "left", padding:"5px 0 5px 0"}} >Send a whatsapp message to</InputLabel1>
     <Input defaultValue={props.finalNumber} onChange={(e) => setFinalNumberValue(e.target.value)}></Input>
-    <Button type="submit" label="submit" onClick={() => openInNewTab(`https://api.whatsapp.com/send/?phone=65${finalNumberValue}&text=${encodedMessage}`, `https://api.whatsapp.com/send/?phone=65${props.finalNumber}&text=${encodedMessage}`)}>Submit</Button>
+    <Button type="submit" label="Book" onClick={() => openInNewTab(`https://api.whatsapp.com/send/?phone=65${finalNumberValue}&text=${encodedMessage}`, `https://api.whatsapp.com/send/?phone=65${props.finalNumber}&text=${encodedMessage}`)}>Book Now</Button>
     </FormGroupStyled>
     </Container>
     </MainContainer>;
