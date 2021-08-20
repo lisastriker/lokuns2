@@ -79,6 +79,7 @@ function DoctorForm(props) {
   const [address, setAddress] = useState("")
   const [medical, setMedical] = useState("")
   const [finalNumberValue, setFinalNumberValue] = useState("")
+  const [submitNumber ,setSubmitNumber] = useState(0)
   //Get userUID
   
   var userUID = localStorage.getItem('useruid') ? localStorage.getItem('useruid') : ""  
@@ -92,12 +93,13 @@ function DoctorForm(props) {
         
     submitsNumber.update({
       submits:firebase.firestore.FieldValue.increment(1)
+    }).then(()=>{})
+  }
+  if(props.uid){
+    db.collection("submits").doc(props.uid).get().then((doc)=>{
+      setSubmitNumber(doc.data().submits)
     })
   }
-
-
-
-
 
   if(userUID){
     db.collection("users").doc(userUID).get().then((doc)=>{
@@ -141,7 +143,7 @@ function DoctorForm(props) {
     <Input required={true} disabled={true} placeholder="Medical License Number" id="my-input" aria-describedby="my-helper-text" value={medical}/>
     <Input defaultValue={props.finalNumber} onChange={(e) => setFinalNumberValue(e.target.value)}></Input>
     <Button type="submit" label="submit" onClick={() => openInNewTab(`https://api.whatsapp.com/send/?phone=65${finalNumberValue}&text=${encodedMessage}`, `https://api.whatsapp.com/send/?phone=65${props.finalNumber}&text=${encodedMessage}`)}>Submit</Button>
-    <Typography></Typography>
+    <Typography>{submitNumber}</Typography>
     </FormGroupStyled>
     </Container>
     </MainContainer>;
