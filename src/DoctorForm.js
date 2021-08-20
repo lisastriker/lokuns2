@@ -1,4 +1,4 @@
-import { Typography, FormGroup, InputLabel as InputLabel1, Input as Input1, FormHelperText, Button as Button1} from '@material-ui/core';
+import { Typography, FormGroup, InputLabel as InputLabel1, Input as Input1, Button as Button1} from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import firebase from '@firebase/app';
@@ -73,7 +73,7 @@ const FormGroupStyled = styled(FormGroup)`
   max-width:100%;
 `
 
-function DoctorForm() {
+function DoctorForm(props) {
   const [email, setEmail] = useState("")
   const [name, setName] = useState("")
   const [address, setAddress] = useState("")
@@ -103,7 +103,6 @@ function DoctorForm() {
 
     console.log(name)
   }
-
     return <MainContainer ><Container><FormGroupStyled>
     <InputLabel htmlFor="my-input">Doctor User Profile</InputLabel>  
     <Input required={true} disabled={true}  placeholder="Name" id="my-input" aria-describedby="my-helper-text"  value={name}/>
@@ -111,6 +110,7 @@ function DoctorForm() {
     <Input required={true} disabled={true} placeholder="Email" id="my-input" aria-describedby="my-helper-text"  value={email}></Input>  
     <Input required={true} disabled={true} placeholder="Medical License Number" id="my-input" aria-describedby="my-helper-text" value={medical}/>
     <Button type="submit" label="submit" onClick={() => checkUser()}>Submit</Button>
+    <Input value={props.finalNumber}>{props.finalNumber}</Input>
     </FormGroupStyled>
     </Container>
     </MainContainer>;

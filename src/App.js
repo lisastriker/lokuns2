@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import { ExpandMore } from '@material-ui/icons';
-import { Accordion, AccordionSummary, AccordionDetails, AppBar, IconButton, Button, Toolbar, Typography } from '@material-ui/core';
+import {  ExpandMore } from '@material-ui/icons';
+import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@material-ui/core';
 import { useEffect, useRef, useState } from 'react';
 import { firebaseConfig } from "./firebaseConfig"
 import firebase from 'firebase/app';
@@ -12,13 +12,36 @@ import { Route, Switch, Redirect, Link, BrowserRouter as Router } from 'react-ro
 import User from './User'
 import DoctorForm from './DoctorForm'
 import SignInForm from './SignInForm'
-
+import { FormGroup, InputLabel as InputLabel1, Input as Input1, Button as Button1} from '@material-ui/core';
+import styled from 'styled-components';
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 } else {
   firebase.app()
 }
 var db = firebase.firestore()
+const MainContainer = styled.div`
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+`
+const Container = styled.div`
+  border-radius:10px;
+  background-color:#fafafa;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  
+`
+
+const FormGroupStyled = styled(FormGroup)`
+  padding: 20px;
+  border: 2px solid black;
+  max-width:100%;
+`
 
 function App() {
   const [loaded, setLoaded] = useState(false)
@@ -34,8 +57,6 @@ function App() {
   const parseData = (db) => {
    const dataArray = [];
     const snapshot = db.collection('emails').orderBy('Timestamp', 'desc').get();
-      db.collection('...').get().then(snap => {
-      });
        snapshot.then(
         (querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -77,21 +98,29 @@ function App() {
   const accordionObject = [firebaseData][0]
   console.log(accordionObject)
   const slice = accordionObject.slice(indexOfFirstPost, indexOfLastPost)
-  /*.slice(indexOfFirstPost, indexOfLastPost)*/
   const listAccordian = slice.map(data => {
     if(data.Body !== undefined){
       const dataBefore = data.Body.replaceAll(/ /g, '')
-      console.log(dataBefore)
       const number = dataBefore.match(/\d{8}/g)
       console.log(number)
-      // if(number.toString().substring(0,1) === '8' || number.toString().substring(0,1) === '9'){
-      //   console.log(number)
-      // }
+      console.log(number.length)
+      var finalNumber = 0
+      if(number.length > 1) {
+        for(var i=0; i<number.length; i++){
+          if(number[i].substring(0,1) === '8'){
+            finalNumber = number[i]
+            console.log(`This number has 8 and is ${number[i]}`)
+          }
+        }
+      }
+      if(number.length===1){
+        const numberString = number.toString()
+        if(numberString.substring(0,1) === '8' || numberString.substring(0,1) === '9'){
+        finalNumber = numberString
+        console.log(numberString) 
+      } else { console.log("Number no 8 or 9")}
     }
-    // const replaceSpace = dataBefore.replace(/ /g, '')
-    // console.log(replaceSpace)
-    // .replace(/ /g, '')
-    // console.log(`I am${replaced}`)s
+    }
     return(        
     <Accordion style={{backgroundColor:"#fafafa"}} expanded={expandedPanel === data.id} onChange={handleAccordionChange(data.id)}>
     <AccordionSummary expandIcon={<ExpandMore />}>
@@ -105,8 +134,8 @@ function App() {
     <AccordionDetails style={{display:"flex", "wordBreak":"break-word", "flexDirection":"column"}}>
       <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
       <Typography style={{whiteSpace: 'pre-line', textAlign:"left", padding:"0 5px 0 40px", width:"60%"}}>{data.Body}</Typography>
-      <div style={{display:"flex", alignItems:"start", paddingRight:"20px"}}> 
-      <DoctorForm/>
+      <div style={{display:"flex", flexDirection:"column", alignItems:"start", paddingRight:"20px"}}> 
+      <DoctorForm finalNumber={finalNumber}/>
       </div>
       </div>
       <br/>
