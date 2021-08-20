@@ -114,7 +114,7 @@ function DoctorForm(props) {
   }
   
   const ref = React.createRef();
-  const encodedMessage = encodeURIComponent('You are texting me')
+  const encodedMessage = encodeURIComponent(`Hi i'm ${name}, my medical license number is ${medical}, i would like to apply for the slot: `)
 
     return <MainContainer ><Container><FormGroupStyled>
     <InputLabel htmlFor="my-input">Doctor User Profile</InputLabel>  
@@ -123,7 +123,7 @@ function DoctorForm(props) {
     <Input required={true} disabled={true} placeholder="Email" id="my-input" aria-describedby="my-helper-text"  value={email}></Input>  
     <Input required={true} disabled={true} placeholder="Medical License Number" id="my-input" aria-describedby="my-helper-text" value={medical}/>
     <Input defaultValue={props.finalNumber} onChange={(e) => setFinalNumberValue(e.target.value)}></Input>
-    <Button type="submit" label="submit" onClick={() => openInNewTab(`http://wa.me/${finalNumberValue}`, `http://wa.me/${props.finalNumber}`)}>Submit</Button>
+    <Button type="submit" label="submit" onClick={() => openInNewTab(`https://api.whatsapp.com/send/?phone=65${finalNumberValue}&text=${encodedMessage}`, `https://api.whatsapp.com/send/?phone=65${props.finalNumber}&text=${encodedMessage}`)}>Submit</Button>
     </FormGroupStyled>
     </Container>
     </MainContainer>;

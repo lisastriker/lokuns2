@@ -83,6 +83,7 @@ const [password, setPassword] = useState("")
 const [name, setName] = useState("")
 const [address, setAddress] = useState("")
 const [medical, setMedical] = useState("")
+const [phone, setPhone] = useState("")
 const [errorMessage, setErrorMessage] = useState("")
 let history = useHistory();
 
@@ -118,6 +119,7 @@ function signUp(email, password){
   <InputLabel htmlFor="my-input">Sign Up</InputLabel>  
   <Input required="true" placeholder="Name" id="my-input" aria-describedby="my-helper-text" value={name} onChange={(event) => setName(event.target.value)}/>
   <Input required="true" placeholder="Address" id="my-input" aria-describedby="my-helper-text" value={address} onChange={(event) => setAddress(event.target.value)}/>
+  <Input required="true" placeholder="Email" id="my-input" aria-describedby="my-helper-text" value={phone} onChange={(event) => setPhone(event.target.value)}></Input>
   <Input required="true" placeholder="Email" id="my-input" aria-describedby="my-helper-text" value={email} onChange={(event) => setEmail(event.target.value)}></Input>
   <Input required="true" type="password" placeholder="Password" id="my-input" aria-describedby="my-helper-text" value={password} onChange={(event) => setPassword(event.target.value)}/>
   <Input required="true" placeholder="Medical License Number"id="my-input" aria-describedby="my-helper-text" value={medical} onChange={(event) => setMedical(event.target.value)}/>

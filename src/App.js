@@ -107,7 +107,7 @@ function App() {
       var finalNumber = 0
       if(number.length > 1) {
         for(var i=0; i<number.length; i++){
-          if(number[i].substring(0,1) === '8'){
+          if(number[i].substring(0,1) === '8' || number[i].substring(0,1) === '9'){
             finalNumber = number[i]
             console.log(`This number has 8 and is ${number[i]}`)
           }
