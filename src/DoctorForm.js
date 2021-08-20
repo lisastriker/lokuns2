@@ -7,6 +7,7 @@ import React from 'react';
 import { EmailRounded } from '@material-ui/icons';
 import "firebase/firestore";
 import { firebaseConfig } from "./firebaseConfig"
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -82,25 +83,9 @@ function DoctorForm(props) {
   const [submitNumber ,setSubmitNumber] = useState(0)
   //Get userUID
   
+  //Get sign in USERUID
   var userUID = localStorage.getItem('useruid') ? localStorage.getItem('useruid') : ""  
-  // console.log(userUID)
   var db = firebase.firestore()
-  //Count number of views
-  const onLikePress = (uid) => {
-    const submitsNumber = firebase.firestore()
-                              .collection("submits")
-                              .doc(uid)
-        
-    submitsNumber.update({
-      submits:firebase.firestore.FieldValue.increment(1)
-    }).then(()=>{})
-  }
-  if(props.uid){
-    db.collection("submits").doc(props.uid).get().then((doc)=>{
-      setSubmitNumber(doc.data().submits)
-    })
-  }
-
   if(userUID){
     db.collection("users").doc(userUID).get().then((doc)=>{
       if (doc.exists) {
@@ -117,7 +102,22 @@ function DoctorForm(props) {
         console.log("Error getting document:", error);
     });
   }
-
+  //Count number of views
+  const onLikePress = (uid) => {
+    const submitsNumber = firebase.firestore()
+                              .collection("submits")
+                              .doc(uid)
+        
+    submitsNumber.update({
+      submits:firebase.firestore.FieldValue.increment(1)
+    }).then()
+  }
+  if(props.uid){
+    db.collection("submits").doc(props.uid).get().then((doc)=>{
+      setSubmitNumber(doc.data().submits)
+    })
+  }
+  
   const openInNewTab = (url, url2) => {
     if(props.uid.length !== 0 ){
       onLikePress(props.uid)
@@ -136,14 +136,17 @@ function DoctorForm(props) {
   const encodedMessage = encodeURIComponent(`Hi i'm ${name}, my medical license number is ${medical}, i would like to apply for the slot: `)
 
     return <MainContainer ><Container><FormGroupStyled>
-    <InputLabel htmlFor="my-input">Doctor User Profile</InputLabel>  
+    <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+    <VisibilityIcon></VisibilityIcon>
+    <Typography>Submits: {submitNumber}</Typography>
+    </div>
+    <InputLabel htmlFor="my-input">Doctor User Profile</InputLabel> 
     <Input required={true} disabled={true}  placeholder="Name" id="my-input" aria-describedby="my-helper-text"  value={name}/>
     <Input required={true} disabled={true} placeholder="Address" id="my-input" aria-describedby="my-helper-text"  value={address}/>
     <Input required={true} disabled={true} placeholder="Email" id="my-input" aria-describedby="my-helper-text"  value={email}></Input>  
     <Input required={true} disabled={true} placeholder="Medical License Number" id="my-input" aria-describedby="my-helper-text" value={medical}/>
     <Input defaultValue={props.finalNumber} onChange={(e) => setFinalNumberValue(e.target.value)}></Input>
     <Button type="submit" label="submit" onClick={() => openInNewTab(`https://api.whatsapp.com/send/?phone=65${finalNumberValue}&text=${encodedMessage}`, `https://api.whatsapp.com/send/?phone=65${props.finalNumber}&text=${encodedMessage}`)}>Submit</Button>
-    <Typography>{submitNumber}</Typography>
     </FormGroupStyled>
     </Container>
     </MainContainer>;
