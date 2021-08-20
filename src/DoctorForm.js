@@ -1,5 +1,5 @@
 import { Typography, FormGroup, InputLabel as InputLabel1, Input as Input1, Button as Button1} from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import firebase from '@firebase/app';
 import { useHistory } from 'react-router-dom';
@@ -78,6 +78,7 @@ function DoctorForm(props) {
   const [name, setName] = useState("")
   const [address, setAddress] = useState("")
   const [medical, setMedical] = useState("")
+  const [finalNumberValue, setFinalNumberValue] = useState("")
   //Get userUID
   
   var userUID = localStorage.getItem('useruid') ? localStorage.getItem('useruid') : ""  
@@ -103,20 +104,18 @@ function DoctorForm(props) {
   const openInNewTab = (url) => {
     const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
     if (newWindow) newWindow.opener = null
+    //Very interesting using setFInalNumberValue for the input field to be changed!
   }
   
-  function checkUser(){
 
-    console.log(name)
-  }
     return <MainContainer ><Container><FormGroupStyled>
     <InputLabel htmlFor="my-input">Doctor User Profile</InputLabel>  
     <Input required={true} disabled={true}  placeholder="Name" id="my-input" aria-describedby="my-helper-text"  value={name}/>
     <Input required={true} disabled={true} placeholder="Address" id="my-input" aria-describedby="my-helper-text"  value={address}/>
     <Input required={true} disabled={true} placeholder="Email" id="my-input" aria-describedby="my-helper-text"  value={email}></Input>  
     <Input required={true} disabled={true} placeholder="Medical License Number" id="my-input" aria-describedby="my-helper-text" value={medical}/>
-    <Input value={props.finalNumber}>{props.finalNumber}</Input>
-    <Button type="submit" label="submit" onClick={() => openInNewTab(`http://wa.me/${props.finalNumber}`)}>Submit</Button>
+    <Input defaultValue={props.finalNumber} onChange={event => setFinalNumberValue(event.target.value)} ></Input>
+    <Button type="submit" label="submit" onClick={() => openInNewTab(`http://wa.me/${finalNumberValue}`)}>Submit</Button>
     </FormGroupStyled>
     </Container>
     </MainContainer>;
