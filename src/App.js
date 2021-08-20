@@ -14,6 +14,7 @@ import DoctorForm from './DoctorForm'
 import SignInForm from './SignInForm'
 import { FormGroup, InputLabel as InputLabel1, Input as Input1, Button as Button1} from '@material-ui/core';
 import styled from 'styled-components';
+import Views from './Views'
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 } else {
@@ -135,7 +136,7 @@ function App() {
       <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
       <Typography style={{whiteSpace: 'pre-line', textAlign:"left", padding:"0 5px 0 40px", width:"60%"}}>{data.Body}</Typography>
       <div style={{display:"flex", flexDirection:"column", alignItems:"start", paddingRight:"20px"}}> 
-      <DoctorForm finalNumber={finalNumber}/>
+      <DoctorForm uid={data.id} finalNumber={finalNumber}/>
       </div>
       </div>
       <br/>
@@ -169,6 +170,9 @@ function App() {
         <div style={{display:"inline-flex", width:"100%"}}>
         <Home/>
         </div>
+      </Route>
+      <Route path="/views">
+        <Views />
       </Route>
       </Switch>
     </div>

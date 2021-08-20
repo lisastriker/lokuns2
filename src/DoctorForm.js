@@ -84,6 +84,21 @@ function DoctorForm(props) {
   var userUID = localStorage.getItem('useruid') ? localStorage.getItem('useruid') : ""  
   // console.log(userUID)
   var db = firebase.firestore()
+  //Count number of views
+  const onLikePress = (uid) => {
+    const submitsNumber = firebase.firestore()
+                              .collection("submits")
+                              .doc(uid)
+        
+    submitsNumber.update({
+      submits:firebase.firestore.FieldValue.increment(1)
+    })
+  }
+
+
+
+
+
   if(userUID){
     db.collection("users").doc(userUID).get().then((doc)=>{
       if (doc.exists) {
@@ -102,6 +117,9 @@ function DoctorForm(props) {
   }
 
   const openInNewTab = (url, url2) => {
+    if(props.uid.length !== 0 ){
+      onLikePress(props.uid)
+    }
     if(finalNumberValue.length !== 0 ){
       const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
     if (newWindow) newWindow.opener = null
@@ -112,8 +130,7 @@ function DoctorForm(props) {
     
     //Very interesting using setFInalNumberValue for the input field to be changed!
   }
-  
-  const ref = React.createRef();
+
   const encodedMessage = encodeURIComponent(`Hi i'm ${name}, my medical license number is ${medical}, i would like to apply for the slot: `)
 
     return <MainContainer ><Container><FormGroupStyled>
@@ -124,6 +141,7 @@ function DoctorForm(props) {
     <Input required={true} disabled={true} placeholder="Medical License Number" id="my-input" aria-describedby="my-helper-text" value={medical}/>
     <Input defaultValue={props.finalNumber} onChange={(e) => setFinalNumberValue(e.target.value)}></Input>
     <Button type="submit" label="submit" onClick={() => openInNewTab(`https://api.whatsapp.com/send/?phone=65${finalNumberValue}&text=${encodedMessage}`, `https://api.whatsapp.com/send/?phone=65${props.finalNumber}&text=${encodedMessage}`)}>Submit</Button>
+    <Typography></Typography>
     </FormGroupStyled>
     </Container>
     </MainContainer>;
