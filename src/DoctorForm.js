@@ -146,15 +146,16 @@ function DoctorForm(props) {
   const encodedMessage = encodeURIComponent(`Hi i'm ${name}, my medical license number is ${medical}, i would like to apply for the slot on ${date} at `)
 
     return <MainContainer ><Container><FormGroupStyled>
-    <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+    <div style={{display:"flex", flexDirection:"row", alignSelf:"flex-end"}}>
     <VisibilityIcon></VisibilityIcon>
-    <Typography>Submits: {submitNumber}</Typography>
+    <Typography style={{paddingLeft:"5px"}}>Applicants: {submitNumber}</Typography>
     </div>
-    <InputLabel htmlFor="my-input">Doctor User Profile</InputLabel> 
+    <InputLabel htmlFor="my-input">Booking Details</InputLabel> 
     <Input required={true} disabled={true}  placeholder="Name" id="my-input" aria-describedby="my-helper-text"  value={name}/>
     <Input required={true} disabled={true} placeholder="Address" id="my-input" aria-describedby="my-helper-text"  value={address}/>
     <Input required={true} disabled={true} placeholder="Email" id="my-input" aria-describedby="my-helper-text"  value={email}></Input>  
     <Input required={true} disabled={true} placeholder="Medical License Number" id="my-input" aria-describedby="my-helper-text" value={medical}/>
+    <InputLabel1 style={{textAlign: "left", padding:"5px 5px 5px 0"}} >Select date: </InputLabel1>
     <div style={{display:"flex", flexDirection:"rows"}}>
     <DatePicker
         onChange={(event) => setDay(event)}
