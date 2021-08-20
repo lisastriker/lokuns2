@@ -99,6 +99,12 @@ function DoctorForm(props) {
         console.log("Error getting document:", error);
     });
   }
+
+  const openInNewTab = (url) => {
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null
+  }
+  
   function checkUser(){
 
     console.log(name)
@@ -109,8 +115,8 @@ function DoctorForm(props) {
     <Input required={true} disabled={true} placeholder="Address" id="my-input" aria-describedby="my-helper-text"  value={address}/>
     <Input required={true} disabled={true} placeholder="Email" id="my-input" aria-describedby="my-helper-text"  value={email}></Input>  
     <Input required={true} disabled={true} placeholder="Medical License Number" id="my-input" aria-describedby="my-helper-text" value={medical}/>
-    <Button type="submit" label="submit" onClick={() => checkUser()}>Submit</Button>
     <Input value={props.finalNumber}>{props.finalNumber}</Input>
+    <Button type="submit" label="submit" onClick={() => openInNewTab(`http://wa.me/${props.finalNumber}`)}>Submit</Button>
     </FormGroupStyled>
     </Container>
     </MainContainer>;
