@@ -119,12 +119,9 @@ function DoctorForm(props) {
 
   //Count number of views
   //Count number of views
-  const onLikePress = (uid) => {
-    const submitsNumber = firebase.firestore()
-    .collection("submit")
-    .doc(uid)
-    submitsNumber.update({
-    submits:firebase.firestore.FieldValue.increment(1)
+  const onLikePress = () => {
+    console.log("CLick is happening")
+    db.collection("submit").doc(props.uid).update({submits:firebase.firestore.FieldValue.increment(1)
     }).then(()=>{
       console.log("Updated")
     }).catch((err)=>console.log(err))
@@ -146,7 +143,7 @@ function DoctorForm(props) {
  
   const openInNewTab = (url, url2) => {
     if(props.uid.length !== 0 ){
-      onLikePress(props.uid)
+      onLikePress()
     }
     if(finalNumberValue.length !== 0 ){
       const newWindow = window.open(url, '_blank', 'noopener,noreferrer')

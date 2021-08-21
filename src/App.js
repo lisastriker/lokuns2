@@ -100,8 +100,9 @@ function App() {
       } else { console.log("Number no 8 or 9")}
     }
     db.collection("submit").doc(data.id).set({
-      uid:data.id
-    }, {merge:true})
+      uid:data.id,
+      submits:0
+    }, {merge:true}).then()
     }
     return(        
     <Accordion style={{backgroundColor:"#fafafa"}} expanded={expandedPanel === data.id} onChange={handleAccordionChange(data.id)}>
