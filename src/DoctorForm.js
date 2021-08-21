@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import firebase from '@firebase/app';
 import { useHistory } from 'react-router-dom';
 import React from 'react';
-import { EmailRounded } from '@material-ui/icons';
+import { EmailRounded, SettingsBackupRestoreSharp } from '@material-ui/icons';
 import "firebase/firestore";
 import { firebaseConfig } from "./firebaseConfig"
 import DatePicker from 'react-date-picker';
@@ -84,6 +84,7 @@ function DoctorForm(props) {
   const [submitNumber ,setSubmitNumber] = useState(0)
   const [day, setDay] = useState("")
   const [date, setDate] = useState("")
+
   //Get userUID
   
   //Get sign in USERUID
@@ -91,7 +92,6 @@ function DoctorForm(props) {
   var db = firebase.firestore()
   if(userUID){
     db.collection("users").doc(userUID).get().then((doc)=>{
-      
       if (doc.exists) {
         setName(doc.data().name)
         setAddress(doc.data().address)
@@ -106,28 +106,44 @@ function DoctorForm(props) {
         console.log("Error getting document:", error);
     });
   }
+
+  useEffect(()=>{
+    if(props.uid){
+      console.log("Hello")
+      db.collection("submit").doc(props.uid).get().then((doc)=>{
+        setSubmitNumber(doc.data().submits)
+      console.log(doc.data())})
+    }  
+  },[props.uid])
+    
+
+  //Count number of views
   //Count number of views
   const onLikePress = (uid) => {
     const submitsNumber = firebase.firestore()
-                              .collection("submits")
-                              .doc(uid)
-        
+    .collection("submit")
+    .doc(uid)
     submitsNumber.update({
-      submits:firebase.firestore.FieldValue.increment(1)
+    submits:firebase.firestore.FieldValue.increment(1)
     }).then(()=>{
-    })
+      console.log("Updated")
+    }).catch((err)=>console.log(err))
+    
   }
 
 
-  // useEffect(()=>{
-  //   if(userUID){
-  //     db.collection("submits").doc(props.uid).get().then((doc)=>{
-  //       setSubmitNumber(doc.data().submits)
-  //     })
-  //   }
-  // },[props.uid])
-    
   
+  // if(props.uid){
+  //   db.collection("submit").doc(props.uid).get().then((doc)=>{
+  //     setSubmitNumber(doc.data().submit)
+  //     console.log(doc.data())
+  //     // if(doc.data().submits){
+  //     //   setSubmitNumber(doc.data().submits)
+  //     // } else {
+  //     //   setSubmitNumber(0)
+  //     // }
+  //   })}
+ 
   const openInNewTab = (url, url2) => {
     if(props.uid.length !== 0 ){
       onLikePress(props.uid)
@@ -155,7 +171,7 @@ function DoctorForm(props) {
     return <MainContainer ><Container><FormGroupStyled>
     <div style={{display:"flex", flexDirection:"row", alignSelf:"flex-end"}}>
     <VisibilityIcon></VisibilityIcon>
-    <Typography style={{paddingLeft:"5px"}}>Applicants: {props.uid}</Typography>
+    <Typography style={{paddingLeft:"5px"}}>Applicants: {submitNumber}</Typography>
     </div>
     <InputLabel htmlFor="my-input">Booking Details</InputLabel> 
     <Input required={true} disabled={true}  placeholder="Name" id="my-input" aria-describedby="my-helper-text"  value={name}/>

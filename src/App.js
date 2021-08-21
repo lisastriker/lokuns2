@@ -76,6 +76,7 @@ function App() {
   const accordionObject = [firebaseData][0]
   console.log(accordionObject)
   const slice = accordionObject.slice(indexOfFirstPost, indexOfLastPost)
+  //Memoize this
   const listAccordian = slice.map(data => {
     if(data.Body !== undefined){
       const dataBefore = data.Body.replaceAll(/ /g, '')
@@ -98,6 +99,9 @@ function App() {
         console.log(numberString) 
       } else { console.log("Number no 8 or 9")}
     }
+    db.collection("submit").doc(data.id).set({
+      uid:data.id
+    }, {merge:true})
     }
     return(        
     <Accordion style={{backgroundColor:"#fafafa"}} expanded={expandedPanel === data.id} onChange={handleAccordionChange(data.id)}>
