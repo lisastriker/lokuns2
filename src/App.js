@@ -14,6 +14,7 @@ import DoctorForm from './DoctorForm'
 import SignInForm from './SignInForm'
 import styled from 'styled-components';
 import Views from './Views'
+import ClinicLanding from './ClinicLanding'
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 } else {
@@ -102,7 +103,7 @@ function App() {
     db.collection("submit").doc(data.id).set({
       uid:data.id,
       submits:0
-    }, {merge:true}).then()
+    }).then()
     }
     return(        
     <Accordion style={{backgroundColor:"#fafafa"}} expanded={expandedPanel === data.id} onChange={handleAccordionChange(data.id)}>
@@ -144,6 +145,9 @@ function App() {
       <Switch>
       <Route path="/user">
         <User />
+      </Route>
+      <Route path="/cliniclanding">
+        <ClinicLanding />
       </Route>
       <Route path="/signin">
         <SignInForm/>
