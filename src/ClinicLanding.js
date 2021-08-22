@@ -44,19 +44,19 @@ function ClinicLanding(){
   const [name, setName] = useState("")
   const [address, setAddress] = useState("")
   const [medical, setMedical] = useState("")
-
+  const [phone, setPhone] = useState("")
   const [clinicEmail, setClinicEmail] = useState("")
   const [emailSubject, setEmailSubject] = useState("")
   const [JobId, setJobId] = useState("")
   const [Date, setDate] = useState("")
-
+  const [textMessage, setTextMessage] = useState("")
+  const [recipient, setRecipient] = useState("")
   let url = new URL(window.location.href);
   console.log(window.location.href)
   const uid = url.searchParams.get("uid");
   const userid = url.searchParams.get("userid");
   const date = url.searchParams.get("day")
 
-  console.log(process.env.REACT_APP_TWILIO_AUTH_TOKEN)
   useEffect(()=>{
     db.collection("users").doc(userid).get().then((doc)=>{
       if (doc.exists) {
@@ -64,6 +64,7 @@ function ClinicLanding(){
         setAddress(doc.data().address)
         setEmail(doc.data().email)
         setMedical(doc.data().medical)
+        setPhone(doc.data().phone)
         // console.log("Document data:", doc.data());
     } else {
         // doc.data() will be undefined in this case
@@ -88,24 +89,12 @@ function ClinicLanding(){
       console.log("Error getting document:", error);
     })
   },[])
-
-  async function onSubmit(){
-    await(axios.post("https://api.twilio.com/2010-04-01/Accounts" + process.env.REACT_APP_TWILIO_ACCOUNT_SID + "/Messages.json", qs.stringify({
-        Body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
-        From: '+14155211196',
-        To: '+6586121207',
-      }), {
-        headers:{
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'application/json'
-            },
-        auth: {
-          username: process.env.REACT_APP_TWILIO_ACCOUNT_SID,
-          password: process.env.REACT_APP_TWILIO_AUTH_TOKEN
-        }
-      })).then(console.log("success")).catch(function(error) {
-        console.log(error);
-      });;
+  
+  function onSubmit(){
+    setTextMessage(encodeURIComponent("Your appoint "))
+    setRecipient("+6586121207")
+    fetch(`http://localhost:4000/send-text?textMessage=${textMessage}`)
+  }
 // TWILIO_AUTH_TOKEN = "5c342dda4adeff7684a15aacea536689"
     // var client = require('twilio')("ACd3be63050c5ec10eec96601af4f9cb1b", "5c342dda4adeff7684a15aacea536689")
     // client.messages
@@ -116,11 +105,6 @@ function ClinicLanding(){
     //  })
     // .then(message => console.log(message.sid));
     // console.log(`I am sid ${accountSid}`)
-  }
-
-
-
-
 
   return(
     <div style={{display:"flex", flexDirection:"row"}}> 

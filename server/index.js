@@ -9,15 +9,16 @@ const app = express()
 app.use(cors())
 
 app.get('/send-text', (req, res) => {
+  const { textMessage, recipient } = req.query
   client.messages
-.create({
-   body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+  .create({
+   body: textMessage,
    from: '+14155211196',
-   to: '+6586121207'
- })
-.then(message => console.log(message.sid));
-res("Sent")
-})
+   to: recipient
+  })
+  .then(message => console.log(message.sid));
+  res("Sent")
+  })
 
 
 app.listen(4000, () => {

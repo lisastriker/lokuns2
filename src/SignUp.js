@@ -98,7 +98,8 @@ function signUp(email, password){
       address:address,
       email: email,
       password: password,
-      medical:medical
+      medical:medical,
+      phone:phone
     }).then(() => {
       console.log("Document successfully written!");
     })
