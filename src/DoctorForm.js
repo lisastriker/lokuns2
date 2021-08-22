@@ -92,6 +92,9 @@ function DoctorForm(props) {
   var db = firebase.firestore()
   if(userUID){
     db.collection("users").doc(userUID).get().then((doc)=>{
+      db.collection("submit").doc(props.uid).set({
+        uid:props.uid
+      }, {merge: true}).then()
       if (doc.exists) {
         setName(doc.data().name)
         setAddress(doc.data().address)
@@ -121,6 +124,9 @@ function DoctorForm(props) {
   //Count number of views
   const onLikePress = () => {
     console.log("CLick is happening")
+    // db.collection("submit").doc(props.uid).set({
+    //   submits:firebase.firestore.FieldValue.increment(1)
+    // }, {merge:true}).then(console.log("Is set"))
     db.collection("submit").doc(props.uid).update({submits:firebase.firestore.FieldValue.increment(1)
     }).then(()=>{
       console.log("Updated")
@@ -128,18 +134,21 @@ function DoctorForm(props) {
     
   }
 
+  useEffect(()=>{
 
+  },[db])
   
-  // if(props.uid){
-  //   db.collection("submit").doc(props.uid).get().then((doc)=>{
-  //     setSubmitNumber(doc.data().submit)
-  //     console.log(doc.data())
-  //     // if(doc.data().submits){
-  //     //   setSubmitNumber(doc.data().submits)
-  //     // } else {
-  //     //   setSubmitNumber(0)
-  //     // }
-  //   })}
+  useEffect(()=>{
+    db.collection("submit").doc(props.uid).get().then((doc)=>{
+      setSubmitNumber(doc.data().submit)
+      if(doc.data().submits){
+        console.log(doc.data().submits)
+        setSubmitNumber(doc.data().submits)
+      } else {
+        setSubmitNumber(0)
+      }
+    })
+  }, [props.uid])
  
   const openInNewTab = (url, url2) => {
     if(props.uid.length !== 0 ){
@@ -162,7 +171,7 @@ function DoctorForm(props) {
     }
   }, [day])
  
-  const uncoded = `http://www.localhost:3000${props.uid}`
+  const uncoded = `http://www.localhost:3000/cliniclanding?id=${props.uid}&day=${date}&${userUID}`
   const encodedMessage = `${uncoded} ${encodeURIComponent(`Hi i'm ${name}, my medical license number is ${medical}, i would like to apply for the slot on ${date} at `)}`
   
     return <MainContainer ><Container><FormGroupStyled>

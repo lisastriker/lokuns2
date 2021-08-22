@@ -93,18 +93,17 @@ function App() {
           }
         }
       }
+      
+  
       if(number.length===1){
         const numberString = number.toString()
         if(numberString.substring(0,1) === '8' || numberString.substring(0,1) === '9'){
         finalNumber = numberString
         console.log(numberString) 
-      } else { console.log("Number no 8 or 9")}
+        } else { console.log("Number no 8 or 9")}
+      }
     }
-    db.collection("submit").doc(data.id).set({
-      uid:data.id,
-      submits:0
-    }).then()
-    }
+
     return(        
     <Accordion style={{backgroundColor:"#fafafa"}} expanded={expandedPanel === data.id} onChange={handleAccordionChange(data.id)}>
     <AccordionSummary expandIcon={<ExpandMore />}>
