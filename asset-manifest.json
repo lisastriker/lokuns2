@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/lokuns2/static/css/main.8d7c97cb.chunk.css",
+    "main.js": "/lokuns2/static/js/main.3e175072.chunk.js",
+    "main.js.map": "/lokuns2/static/js/main.3e175072.chunk.js.map",
+    "runtime-main.js": "/lokuns2/static/js/runtime-main.84aa4305.js",
+    "runtime-main.js.map": "/lokuns2/static/js/runtime-main.84aa4305.js.map",
+    "static/css/2.9c6b934b.chunk.css": "/lokuns2/static/css/2.9c6b934b.chunk.css",
+    "static/js/2.948265eb.chunk.js": "/lokuns2/static/js/2.948265eb.chunk.js",
+    "static/js/2.948265eb.chunk.js.map": "/lokuns2/static/js/2.948265eb.chunk.js.map",
+    "static/js/3.5adc4fdf.chunk.js": "/lokuns2/static/js/3.5adc4fdf.chunk.js",
+    "static/js/3.5adc4fdf.chunk.js.map": "/lokuns2/static/js/3.5adc4fdf.chunk.js.map",
+    "index.html": "/lokuns2/index.html",
+    "static/css/2.9c6b934b.chunk.css.map": "/lokuns2/static/css/2.9c6b934b.chunk.css.map",
+    "static/css/main.8d7c97cb.chunk.css.map": "/lokuns2/static/css/main.8d7c97cb.chunk.css.map",
+    "static/js/2.948265eb.chunk.js.LICENSE.txt": "/lokuns2/static/js/2.948265eb.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/lokuns2/static/media/logo.6ce24c58.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.84aa4305.js",
+    "static/css/2.9c6b934b.chunk.css",
+    "static/js/2.948265eb.chunk.js",
+    "static/css/main.8d7c97cb.chunk.css",
+    "static/js/main.3e175072.chunk.js"
+  ]
+}
