@@ -152,8 +152,9 @@ function DoctorForm(props) {
       console.log(date)
     }
   }, [day])
-  const uncoded = `http://www.localhost:3000/cliniclanding?uid=${props.uid}&day=${date}&userid=${userUID}`
-  const encodedMessage = `${uncoded} ${encodeURIComponent(`Hi i'm ${name}, my medical license number is ${medical}, i would like to apply for the slot on ${date} at `)}`
+  const uncoded = encodeURIComponent(`http://www.localhost:3000/cliniclanding?uid=${props.uid}&day=${date}&userid=${userUID} `)
+  const encoded = encodeURIComponent(`Hi i'm ${name}, my medical license number is ${medical}, i would like to apply for the slot on ${date} at `)
+  const encodedMessage = `${uncoded} ${encoded}`
   
     return <MainContainer ><Container><FormGroupStyled>
     <div style={{display:"flex", flexDirection:"row", alignSelf:"flex-end"}}>

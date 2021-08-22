@@ -6,12 +6,12 @@ import { firebaseConfig } from "./firebaseConfig"
 import firebase from '@firebase/app';
 import { useEffect, useState } from "react";
 import styled from 'styled-components'
+import dotenv from 'dotenv'
+dotenv.config('../.env');
 
-console.log(process.env.TWILIO_ACCOUNT_SID);
 var db = firebase.firestore()
-var axios = require('axios')
-var qs = require('qs')
-require('dotenv').config();
+  var axios = require('axios')
+  var qs = require('qs')
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 } else {
@@ -55,8 +55,8 @@ function ClinicLanding(){
   const uid = url.searchParams.get("uid");
   const userid = url.searchParams.get("userid");
   const date = url.searchParams.get("day")
-  console.log(process.env.TWILIO_ACCOUNT_SID)
-  console.log(process.env.TWILIO_AUTH_TOKEN)
+
+  console.log(process.env.REACT_APP_TWILIO_AUTH_TOKEN)
   useEffect(()=>{
     db.collection("users").doc(userid).get().then((doc)=>{
       if (doc.exists) {
@@ -90,18 +90,22 @@ function ClinicLanding(){
   },[])
 
   async function onSubmit(){
-    const accountSid = "ACd3be63050c5ec10eec96601af4f9cb1b";
-    const authToken = "5c342dda4adeff7684a15aacea536689"
-    await(axios.post("https://api.twilio.com/2010-04-01/Accounts/" + accountSid + "/Messages.json", qs.stringify({
+    await(axios.post("https://api.twilio.com/2010-04-01/Accounts" + process.env.REACT_APP_TWILIO_ACCOUNT_SID + "/Messages.json", qs.stringify({
         Body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
         From: '+14155211196',
-        To: '+6586121207'
+        To: '+6586121207',
       }), {
+        headers:{
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+            },
         auth: {
-          username: accountSid,
-          password: authToken
+          username: process.env.REACT_APP_TWILIO_ACCOUNT_SID,
+          password: process.env.REACT_APP_TWILIO_AUTH_TOKEN
         }
-      }));
+      })).then(console.log("success")).catch(function(error) {
+        console.log(error);
+      });;
 // TWILIO_AUTH_TOKEN = "5c342dda4adeff7684a15aacea536689"
     // var client = require('twilio')("ACd3be63050c5ec10eec96601af4f9cb1b", "5c342dda4adeff7684a15aacea536689")
     // client.messages
