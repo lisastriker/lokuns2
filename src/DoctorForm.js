@@ -1,12 +1,12 @@
 import { Typography, FormGroup, InputLabel as InputLabel1, Input as Input1, Button as Button1} from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { firebaseConfig } from "./firebaseConfig"
 import firebase from '@firebase/app';
 import { useHistory } from 'react-router-dom';
 import React from 'react';
 import { EmailRounded, SettingsBackupRestoreSharp } from '@material-ui/icons';
 import "firebase/firestore";
-import { firebaseConfig } from "./firebaseConfig"
 import DatePicker from 'react-date-picker';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 if(!firebase.apps.length) {
@@ -86,33 +86,33 @@ function DoctorForm(props) {
   const [date, setDate] = useState("")
 
   //Get userUID
-  
-  //Get sign in USERUID
   var userUID = localStorage.getItem('useruid') ? localStorage.getItem('useruid') : ""  
   var db = firebase.firestore()
-  if(userUID){
-    db.collection("users").doc(userUID).get().then((doc)=>{
-      db.collection("submit").doc(props.uid).set({
-        uid:props.uid
-      }, {merge: true}).then()
-      if (doc.exists) {
-        setName(doc.data().name)
-        setAddress(doc.data().address)
-        setEmail(doc.data().email)
-        setMedical(doc.data().medical)
-        // console.log("Document data:", doc.data());
-    } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
+  console.log(`I am userUID ${userUID}`)
+  console.log(`I am propsuid ${props.uid}`)
+  //Get sign in USERUID
+  useEffect(()=>{
+    if(userUID){
+      db.collection("users").doc(userUID).get().then((doc)=>{
+        db.collection("submit").doc(props.uid).set({
+          uid:props.uid
+        }, {merge: true}).then()
+        if (doc.exists) {
+          setName(doc.data().name)
+          setAddress(doc.data().address)
+          setEmail(doc.data().email)
+          setMedical(doc.data().medical)
+          // console.log("Document data:", doc.data());
+      } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+      }
+      })
     }
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-  }
-
+  },[userUID])
+  
   useEffect(()=>{
     if(props.uid){
-      console.log("Hello")
       db.collection("submit").doc(props.uid).get().then((doc)=>{
         setSubmitNumber(doc.data().submits)
       console.log(doc.data())})
@@ -130,17 +130,6 @@ function DoctorForm(props) {
     
   }
   
-  // useEffect(()=>{
-  //   db.collection("submit").doc(props.uid).get().then((doc)=>{
-  //     setSubmitNumber(doc.data().submit)
-  //     if(doc.data().submits){
-  //       console.log(doc.data().submits)
-  //       setSubmitNumber(doc.data().submits)
-  //     } else {
-  //       setSubmitNumber(0)
-  //     }
-  //   })
-  // }, [props.uid])
  
   const openInNewTab = (url, url2) => {
     if(props.uid.length !== 0 ){
@@ -160,10 +149,10 @@ function DoctorForm(props) {
     if(day){ 
       const dateArray = day.toDateString().split(' ')
       setDate(dateArray.join('-'))
+      console.log(date)
     }
   }, [day])
- 
-  const uncoded = `http://www.localhost:3000/cliniclanding?id=${props.uid}&day=${date}&${userUID}`
+  const uncoded = `http://www.localhost:3000/cliniclanding?uid=${props.uid}&day=${date}&userid=${userUID}`
   const encodedMessage = `${uncoded} ${encodeURIComponent(`Hi i'm ${name}, my medical license number is ${medical}, i would like to apply for the slot on ${date} at `)}`
   
     return <MainContainer ><Container><FormGroupStyled>

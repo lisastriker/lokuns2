@@ -40,7 +40,7 @@ function App() {
         (querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 const document = { ...doc.data(), id: doc.id , TimeStamp: doc.TimeStamp};
-                console.log(doc.id)
+                // console.log(doc.id)
                 dataArray.push(document)
             });//--> resolve when data is ready
         },
@@ -82,8 +82,8 @@ function App() {
     if(data.Body !== undefined){
       const dataBefore = data.Body.replaceAll(/ /g, '')
       const number = dataBefore.match(/\d{8}/g)
-      console.log(number)
-      console.log(number.length)
+      // console.log(number)
+      // console.log(number.length)
       var finalNumber = 0
       if(number.length > 1) {
         for(var i=0; i<number.length; i++){
@@ -92,8 +92,7 @@ function App() {
             console.log(`This number has 8 and is ${number[i]}`)
           }
         }
-      }
-      
+      }     
   
       if(number.length===1){
         const numberString = number.toString()
@@ -111,7 +110,7 @@ function App() {
       Job ID:{data.JobId}
     </Typography>
     &nbsp;
-    <Typography> {data.Subject}</Typography>
+    <Typography>{data.Subject}</Typography>
     </AccordionSummary>
 
     <AccordionDetails style={{display:"flex", "wordBreak":"break-word", "flexDirection":"column"}}>
