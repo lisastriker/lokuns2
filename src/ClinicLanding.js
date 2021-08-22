@@ -47,7 +47,7 @@ function ClinicLanding(){
   const [phone, setPhone] = useState("")
   const [clinicEmail, setClinicEmail] = useState("")
   const [emailSubject, setEmailSubject] = useState("")
-  const [JobId, setJobId] = useState("")
+  const [jobId, setJobId] = useState("")
   const [Date, setDate] = useState("")
   const [textMessage, setTextMessage] = useState("")
   const [recipient, setRecipient] = useState("")
@@ -80,6 +80,7 @@ function ClinicLanding(){
         setClinicEmail(doc.data().Email)
         setEmailSubject(doc.data().Subject)
         setJobId(doc.data().JobId)
+        //This is date of email not appts
         setDate(date)
         // console.log("Document data:", doc.data());
     } else {
@@ -91,7 +92,7 @@ function ClinicLanding(){
   },[])
   
   function onSubmit(){
-    setTextMessage(encodeURIComponent("Your appoint "))
+    setTextMessage(encodeURIComponent(`Job ID: ${jobId} Your appointment on ${date} has been approved by ${clinicEmail}`))
     setRecipient("+6586121207")
     fetch(`http://localhost:4000/send-text?textMessage=${textMessage}`)
   }
@@ -143,7 +144,7 @@ function ClinicLanding(){
         {emailSubject}
       </Typography>
       <Typography variant="body2" component="p">
-        JobID: {JobId}
+        JobID: {jobId}
       </Typography>
       <Typography variant="body2" component="p">
         Requested date of Booking: {Date}
