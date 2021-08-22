@@ -64,7 +64,7 @@ const Type = styled(Typography)`
   word-wrap: break-word;
   font-size:0.8em;
 `
-
+//Need to protect some of these routes
 function SignInForm(){
 let history = useHistory();
 const [email, setEmail] = useState("")

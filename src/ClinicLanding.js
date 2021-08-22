@@ -73,7 +73,7 @@ function ClinicLanding(){
       console.log("Error getting document:", error);
     })
 
-
+    //look for the email that was clicked
     db.collection("emails").doc(uid).get().then((doc)=>{
       if (doc.exists) {
         console.log(doc.data())
@@ -95,17 +95,8 @@ function ClinicLanding(){
     setTextMessage(encodeURIComponent(`Job ID: ${jobId} Your appointment on ${date} has been approved by ${clinicEmail}`))
     setRecipient("+6586121207")
     fetch(`http://localhost:4000/send-text?textMessage=${textMessage}`)
-  }
-// TWILIO_AUTH_TOKEN = "5c342dda4adeff7684a15aacea536689"
-    // var client = require('twilio')("ACd3be63050c5ec10eec96601af4f9cb1b", "5c342dda4adeff7684a15aacea536689")
-    // client.messages
-    // .create({
-    //    body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
-    //    from: '+14155211196',
-    //    to: '+6586121207'
-    //  })
-    // .then(message => console.log(message.sid));
-    // console.log(`I am sid ${accountSid}`)
+  } //append at &recipient=${recipient} ,= this is phone so take from either finalPhoneValue or props.finalnumber from doctorform
+
 
   return(
     <div style={{display:"flex", flexDirection:"row"}}> 

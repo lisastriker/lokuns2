@@ -15,6 +15,8 @@ import SignInForm from './SignInForm'
 import styled from 'styled-components';
 import Views from './Views'
 import ClinicLanding from './ClinicLanding'
+
+//Use npm run server to start backend, then use npm start
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 } else {

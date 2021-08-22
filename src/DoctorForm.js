@@ -130,7 +130,7 @@ function DoctorForm(props) {
     
   }
   
- 
+  //Update the submit view count and open whatsapp
   const openInNewTab = (url, url2) => {
     if(props.uid.length !== 0 ){
       onLikePress()
@@ -145,6 +145,7 @@ function DoctorForm(props) {
     
     //Very interesting using setFInalNumberValue for the input field to be changed!
   }
+  //Convert day to nice format
   useEffect(()=>{
     if(day){ 
       const dateArray = day.toDateString().split(' ')
