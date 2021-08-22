@@ -1,4 +1,4 @@
-import { Typography, Button, TextField, InputAdornment, IconButton } from "@material-ui/core"
+import { Typography, Button, TextField, InputAdornment, IconButton, withTheme } from "@material-ui/core"
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -6,9 +6,12 @@ import { firebaseConfig } from "./firebaseConfig"
 import firebase from '@firebase/app';
 import { useEffect, useState } from "react";
 import styled from 'styled-components'
-import TimePicker from 'tui-time-picker';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+
+console.log(process.env.TWILIO_ACCOUNT_SID);
 var db = firebase.firestore()
+var axios = require('axios')
+var qs = require('qs')
+require('dotenv').config();
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 } else {
@@ -29,6 +32,13 @@ const ContainerForTime = styled.div`
   display:flex;
   flex-direction:column
 `
+const ButtonStyled = styled(Button)`
+  background-color:#FF9F1C;
+  margin-left:10px;
+  &:hover {
+    background-color:grey;
+  }
+`
 function ClinicLanding(){
   const [email, setEmail] = useState("")
   const [name, setName] = useState("")
@@ -45,7 +55,8 @@ function ClinicLanding(){
   const uid = url.searchParams.get("uid");
   const userid = url.searchParams.get("userid");
   const date = url.searchParams.get("day")
-
+  console.log(process.env.TWILIO_ACCOUNT_SID)
+  console.log(process.env.TWILIO_AUTH_TOKEN)
   useEffect(()=>{
     db.collection("users").doc(userid).get().then((doc)=>{
       if (doc.exists) {
@@ -77,6 +88,34 @@ function ClinicLanding(){
       console.log("Error getting document:", error);
     })
   },[])
+
+  async function onSubmit(){
+    const accountSid = "ACd3be63050c5ec10eec96601af4f9cb1b";
+    const authToken = "5c342dda4adeff7684a15aacea536689"
+    await(axios.post("https://api.twilio.com/2010-04-01/Accounts/" + accountSid + "/Messages.json", qs.stringify({
+        Body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+        From: '+14155211196',
+        To: '+6586121207'
+      }), {
+        auth: {
+          username: accountSid,
+          password: authToken
+        }
+      }));
+// TWILIO_AUTH_TOKEN = "5c342dda4adeff7684a15aacea536689"
+    // var client = require('twilio')("ACd3be63050c5ec10eec96601af4f9cb1b", "5c342dda4adeff7684a15aacea536689")
+    // client.messages
+    // .create({
+    //    body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+    //    from: '+14155211196',
+    //    to: '+6586121207'
+    //  })
+    // .then(message => console.log(message.sid));
+    // console.log(`I am sid ${accountSid}`)
+  }
+
+
+
 
 
   return(
@@ -150,7 +189,7 @@ function ClinicLanding(){
       </ContainerForTime>
     </form>
     <CardActions>
-      <Button variant="contained" color="primary" size="small">Submit</Button>
+      <ButtonStyled variant="contained" color="default" size="small" onClick={()=>onSubmit()}>Submit</ButtonStyled>
     </CardActions>
   </CardStyled>
   </div>
