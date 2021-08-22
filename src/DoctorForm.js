@@ -121,34 +121,26 @@ function DoctorForm(props) {
     
 
   //Count number of views
-  //Count number of views
   const onLikePress = () => {
     console.log("CLick is happening")
-    // db.collection("submit").doc(props.uid).set({
-    //   submits:firebase.firestore.FieldValue.increment(1)
-    // }, {merge:true}).then(console.log("Is set"))
     db.collection("submit").doc(props.uid).update({submits:firebase.firestore.FieldValue.increment(1)
     }).then(()=>{
       console.log("Updated")
     }).catch((err)=>console.log(err))
     
   }
-
-  useEffect(()=>{
-
-  },[db])
   
-  useEffect(()=>{
-    db.collection("submit").doc(props.uid).get().then((doc)=>{
-      setSubmitNumber(doc.data().submit)
-      if(doc.data().submits){
-        console.log(doc.data().submits)
-        setSubmitNumber(doc.data().submits)
-      } else {
-        setSubmitNumber(0)
-      }
-    })
-  }, [props.uid])
+  // useEffect(()=>{
+  //   db.collection("submit").doc(props.uid).get().then((doc)=>{
+  //     setSubmitNumber(doc.data().submit)
+  //     if(doc.data().submits){
+  //       console.log(doc.data().submits)
+  //       setSubmitNumber(doc.data().submits)
+  //     } else {
+  //       setSubmitNumber(0)
+  //     }
+  //   })
+  // }, [props.uid])
  
   const openInNewTab = (url, url2) => {
     if(props.uid.length !== 0 ){
