@@ -1,11 +1,13 @@
-import { Typography, Button } from "@material-ui/core"
+import { Typography, Button, TextField, InputAdornment, IconButton } from "@material-ui/core"
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import { firebaseConfig } from "./firebaseConfig"
 import firebase from '@firebase/app';
 import { useEffect, useState } from "react";
-import styled, { isStyledComponent } from 'styled-components'
+import styled from 'styled-components'
+import TimePicker from 'tui-time-picker';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 var db = firebase.firestore()
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -16,6 +18,16 @@ if(!firebase.apps.length) {
 const CardStyled = styled(Card)`
   width:50%;
   text-align:left
+`
+
+const TextStyled = styled(TextField)`
+  border:solid 2px black;
+`
+
+const ContainerForTime = styled.div`
+  padding-left:20px;
+  display:flex;
+  flex-direction:column
 `
 function ClinicLanding(){
   const [email, setEmail] = useState("")
@@ -33,6 +45,7 @@ function ClinicLanding(){
   const uid = url.searchParams.get("uid");
   const userid = url.searchParams.get("userid");
   const date = url.searchParams.get("day")
+
   useEffect(()=>{
     db.collection("users").doc(userid).get().then((doc)=>{
       if (doc.exists) {
@@ -47,6 +60,7 @@ function ClinicLanding(){
     }}).catch((error) => {
       console.log("Error getting document:", error);
     })
+
 
     db.collection("emails").doc(uid).get().then((doc)=>{
       if (doc.exists) {
@@ -64,7 +78,7 @@ function ClinicLanding(){
     })
   },[])
 
-  
+
   return(
     <div style={{display:"flex", flexDirection:"row"}}> 
     <CardStyled style={{width:"50%", textAlign:"left"}}>
@@ -85,9 +99,6 @@ function ClinicLanding(){
           {medical}
           <br />
         </Typography>
-        <Typography variant="body2" component="p">
-        Requested date of Booking: {Date}
-      </Typography>
       </CardContent>
       <CardActions>
         <Button size="small">Learn More</Button>
@@ -107,10 +118,39 @@ function ClinicLanding(){
       <Typography variant="body2" component="p">
         JobID: {JobId}
       </Typography>
-      <input type="text" id="timepicker-input" placeholder="00:00" />
+      <Typography variant="body2" component="p">
+        Requested date of Booking: {Date}
+      </Typography>
     </CardContent>
+    <form style={{display:"flex", flexDirection:"columns", alignItems:"center"}}>
+    <ContainerForTime>
+      <Typography>Start Time</Typography>
+      <TextStyled
+        id="time"
+        type="time"
+        freesolo
+        defaultValue="12:00"
+        InputProps={{
+          shrink: true, 
+          disableUnderline: true 
+        }}
+      />
+      </ContainerForTime>
+      <ContainerForTime>
+      <Typography>End Time</Typography>
+      <TextStyled
+        id="time"
+        type="time"
+        defaultValue="12:00"
+        inputProps={{
+          step: 1800, // 5 min
+          disableUnderline: true 
+        }}
+      />
+      </ContainerForTime>
+    </form>
     <CardActions>
-      <Button size="small">Learn More</Button>
+      <Button variant="contained" color="primary" size="small">Submit</Button>
     </CardActions>
   </CardStyled>
   </div>
