@@ -77,7 +77,7 @@ function signIn(email, password){
     console.log("Signed in")
     localStorage.setItem('useruid', userCredential.user.uid)
     console.log(userCredential.user)
-    history.push("/");
+    history.push("/home");
   })
   .catch((error) => {
     setErrorMessage(error.message);

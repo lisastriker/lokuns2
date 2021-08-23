@@ -131,14 +131,15 @@ function App() {
 
   function Home() {
     return (
-      <div style={{width:"100%", margin:"20px", flexDirection:"column", display:"flex"}}>
-      <div style={{alignItems:"center"}}>
-      {loaded ? listAccordian : null} 
-      <Pagination style={{backgroundColor:"white", marginTop:"10px"}} shape="rounded" color="secondary" variant="outline" page={page} count={Math.ceil(firebaseData.length / postsPerPage)} onChange={handleChange}/>
-      </div>
-      </div>
-    )
+        <div style={{width:"100%", margin:"20px", flexDirection:"column", display:"flex"}}>
+        <div style={{alignItems:"center"}}>
+        {loaded ? listAccordian : null} 
+        <Pagination style={{backgroundColor:"white", marginTop:"10px"}} shape="rounded" color="secondary" variant="outline" page={page} count={Math.ceil(firebaseData.length / postsPerPage)} onChange={handleChange}/>
+        </div>
+        </div>
+      )
   }
+
   return (
     <Router>
     <div className="App" style={{backgroundColor:"grey", height:"100%"}}>
@@ -150,13 +151,10 @@ function App() {
       <Route path="/cliniclanding">
         <ClinicLanding />
       </Route>
-      <Route path="/signin">
-        <SignInForm/>
+      <Route path="/home" render={()=>userProfile? <Home></Home> : <Redirect to={{path:'/'}}></Redirect>}>
       </Route>
       <Route path="/">
-        <div style={{display:"inline-flex", width:"100%"}}>
-        <Home/>
-        </div>
+        <SignInForm/>
       </Route>
       <Route path="/views">
         <Views />
