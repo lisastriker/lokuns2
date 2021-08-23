@@ -1,13 +1,13 @@
 const accountSid = process.env.REACT_APP_TWILIO_ACCOUNT_SID
-//"ACd3be63050c5ec10eec96601af4f9cb1b"
+// "ACd3be63050c5ec10eec96601af4f9cb1b"
 const authToken = process.env.REACT_APP_TWILIO_AUTH_TOKEN
 // "b0bb3d17c13fb8b93b1a83dbf4378e28"
-const client = require('twilio')(accountSid, authToken);
+const client = require('twilio')("ACd3be63050c5ec10eec96601af4f9cb1b", "b0bb3d17c13fb8b93b1a83dbf4378e28");
 const express = require('express'); 
 const cors = require('cors');
 const app = express()
 const path = require('path')
-const port = process.send.PORT || 4000
+const port = process.env.PORT || 4000
 app.use(cors())
 
 if (process.env.NODE_ENV === 'production'){
