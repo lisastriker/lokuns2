@@ -6,7 +6,16 @@ const client = require('twilio')(accountSid, authToken);
 const express = require('express'); 
 const cors = require('cors');
 const app = express()
+const path = require('path')
+const port = process.send.PORT || 4000
 app.use(cors())
+
+if (process.env.NODE_ENV === 'production'){
+  app.use(express.static('build'))
+  app.get("*", (req, res) => {
+    req.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+  })
+}
 
 app.get('/send-text', (req, res) => {
   const { textMessage, recipient } = req.query
@@ -21,6 +30,6 @@ app.get('/send-text', (req, res) => {
   })
 
 
-app.listen(4000, () => {
-  console.log(`Example app listening at http://localhost:4000`)
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:`, port)
 })
