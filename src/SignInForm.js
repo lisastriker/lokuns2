@@ -85,8 +85,8 @@ function signIn(email, password){
 }
   return <MainContainer ><Container><FormGroupStyled>
   <InputLabel htmlFor="my-input">Sign In</InputLabel>  
-  <Input required="true" placeholder="Email Address" id="my-input" aria-describedby="my-helper-text" value={email} onChange={(event) => setEmail(event.target.value)}/>
-  <Input type="password" id="my-input" aria-describedby="my-helper-text" value={password} onChange={(event) => setPassword(event.target.value)}/>
+  <Input required={true} placeholder="Email Address" id="my-input" aria-describedby="my-helper-text" value={email} onChange={(event) => setEmail(event.target.value)}/>
+  <Input required={true} type="password" id="my-input" aria-describedby="my-helper-text" value={password} onChange={(event) => setPassword(event.target.value)}/>
   <Button type="submit" label="submit" onClick={() => signIn(email, password)}>Submit</Button>
   <Type>{errorMessage}</Type>
   <Type htmlFor="my-input">If you don't have an account sign up.</Type>  

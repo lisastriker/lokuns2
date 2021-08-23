@@ -74,6 +74,7 @@ function App() {
   };
   var userProfile = localStorage.getItem('name')
   console.log(userProfile)
+
   const indexOfLastPost = page * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const accordionObject = [firebaseData][0]

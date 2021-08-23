@@ -48,3 +48,10 @@
 .MuiAccordionSummary-root:hover{
   background-color:#ebebeb;
 }
+
+.MuiInputBase-input {
+  padding:0px;
+}
+.MuiOutlinedInput-input{
+  padding:0px;
+}
