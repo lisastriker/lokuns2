@@ -73,8 +73,6 @@ const FormGroupStyled = styled(FormGroup)`
   border: 2px solid black;
   max-width:100%;
 `
-
-
 function DoctorForm(props) {
   const [email, setEmail] = useState("")
   const [name, setName] = useState("")

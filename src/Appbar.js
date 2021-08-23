@@ -26,7 +26,7 @@ function AppBarComponent(props) {
       color="inherit"
       aria-label="open drawer"
     >
-      <Link to="/"><img alt="homelogo" src={LokunsLogo}/></Link>
+      <Link to="/home"><img alt="homelogo" src={LokunsLogo}/></Link>
     </IconButton>
     <div style={{marginLeft:"auto"}}>
       <Typography style={{display:"inline-flex", padding:"10px"}}>{name}</Typography>
